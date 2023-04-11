@@ -5,6 +5,24 @@
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var _modules_scores_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(11);
+
+
+
+const newScore = new _modules_scores_js__WEBPACK_IMPORTED_MODULE_1__["default"]();
+const addScore = document.querySelector('.input-form');
+
+addScore.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const name = addScore.name.value;
+  const scoreNum = addScore.score.value;
+  newScore.addScore({ name, scoreNum });
+
+  addScore.name.value = '';
+  addScore.score.value = '';
+});
+
+document.addEventListener('DOMContentLoaded', newScore.getScore);
 
 
 /***/ }),
@@ -317,7 +335,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n  font-family: 'Ubuntu', sans-serif;\n}\n\n/* Title */\n.title {\n  text-align: start;\n  margin-left: 7%;\n  margin-bottom: 3%;\n  font-size: 3em;\n  padding-top: 20px;\n}\n\n/* Whole Container */\n.whole-container {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-evenly;\n}\n\n/* Recent Scores */\n.score-list {\n  display: flex;\n  flex-direction: column;\n  width: 30%;\n}\n\n.score-header {\n  display: flex;\n  justify-content: space-evenly;\n  margin-bottom: 4%;\n}\n\nh2 {\n  font-size: 2em;\n}\n\n.refresh-btn {\n  width: 30%;\n}\n\n.scores-list {\n  list-style-type: none;\n  border: 3px solid black;\n  padding: 1%;\n}\n\n.scores-list li {\n  margin-bottom: 1%;\n}\n\n.scores-list li:nth-child(even) {\n  background-color: #c2cfe0;\n}\n\n/* BTN CLASS */\n.btn {\n  border: 2px solid black;\n  box-shadow: 1px 1px 1px black;\n  margin: auto 10px auto 0;\n  height: 35px;\n  font-size: 1em;\n}\n\n.btn:hover {\n  transform: scale(1.1);\n}\n\n/* Add your score */\n.add-score-container {\n  width: 20%;\n}\n\n.input-form {\n  display: flex;\n  flex-direction: column;\n}\n\n.input-form input {\n  margin-top: 5%;\n  border: 3px solid black;\n  padding: 0.2em;\n  font-size: 1em;\n}\n\n.submit-btn {\n  margin-top: 5%;\n  width: 30%;\n  align-self: flex-end;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -421,6 +439,64 @@ module.exports = function (cssWithMappingToString) {
   };
   return list;
 };
+
+/***/ }),
+/* 11 */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+class Score {
+  constructor(id, name, score) {
+    this.id = id;
+    this.name = name;
+    this.score = score;
+  }
+
+  /* Mocking Data */
+
+  scoreData = [
+    {
+      id: 1,
+      name: 'A',
+      score: 10,
+    },
+    {
+      id: 2,
+      name: 'B',
+      score: 20,
+    },
+    {
+      id: 3,
+      name: 'C',
+      score: 30,
+    },
+    {
+      id: 4,
+      name: 'D',
+      score: 40,
+    },
+  ]
+
+  getScore = () => {
+    const scoresContainer = document.getElementById('scores');
+    scoresContainer.innerHTML = this.scoreData.map((element) => `<li class="score-item"}>${element.name} : ${element.score}</li>`).join('');
+  }
+
+  addScore=({ name, scoreNum }) => {
+    this.scoreData.push({
+      id: this.scoreData.length + 1,
+      name,
+      score: scoreNum,
+    });
+    this.getScore();
+  }
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Score);
+
 
 /***/ })
 ],

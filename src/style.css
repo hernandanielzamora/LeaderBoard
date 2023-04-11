@@ -2,4 +2,92 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+/* Title */
+.title {
+  text-align: start;
+  margin-left: 7%;
+  margin-bottom: 3%;
+  font-size: 3em;
+  padding-top: 20px;
+}
+
+/* Whole Container */
+.whole-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+/* Recent Scores */
+.score-list {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+}
+
+.score-header {
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 4%;
+}
+
+h2 {
+  font-size: 2em;
+}
+
+.refresh-btn {
+  width: 30%;
+}
+
+.scores-list {
+  list-style-type: none;
+  border: 3px solid black;
+  padding: 1%;
+}
+
+.scores-list li {
+  margin-bottom: 1%;
+}
+
+.scores-list li:nth-child(even) {
+  background-color: #c2cfe0;
+}
+
+/* BTN CLASS */
+.btn {
+  border: 2px solid black;
+  box-shadow: 1px 1px 1px black;
+  margin: auto 10px auto 0;
+  height: 35px;
+  font-size: 1em;
+}
+
+.btn:hover {
+  transform: scale(1.1);
+}
+
+/* Add your score */
+.add-score-container {
+  width: 20%;
+}
+
+.input-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-form input {
+  margin-top: 5%;
+  border: 3px solid black;
+  padding: 0.2em;
+  font-size: 1em;
+}
+
+.submit-btn {
+  margin-top: 5%;
+  width: 30%;
+  align-self: flex-end;
 }
