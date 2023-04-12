@@ -7,13 +7,11 @@ const addScore = document.querySelector('.input-form');
 addScore.addEventListener('submit', (e) => {
   e.preventDefault();
   const user = addScore.name.value;
-  const scoreNum = addScore.score.value;
-  newScore.addScore({ user, scoreNum });
-  addScore.name.value = '';
-  addScore.score.value = '';
+  const scorePoints = addScore.score.value;
+  newScore.addScore({ user, scorePoints });
   addScore.reset();
 });
 
 const refreshBtn = document.getElementById('refresh-btn');
 refreshBtn.addEventListener('click', newScore.fetchingData);
-window.addEventListener('load', newScore.getScore);
+document.addEventListener('DOMContentLoaded', newScore.getScore);

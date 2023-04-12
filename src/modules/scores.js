@@ -4,28 +4,31 @@ class Score {
     this.score = score;
   }
 
+  /* Array for data */
   apiData = [];
 
+  /* API URL */
   apiUrl = 'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/dwaUzchB7HMCYRhPP4Wk/scores/';
 
   /* Display Score */
   getScore = () => {
     const scoresContainer = document.getElementById('scores');
     scoresContainer.innerHTML = this.apiData.map((element) => `<li class="score-item">${element.user} : ${element.score}</li>`).join('');
-  }
+  };
 
+  /* Getting data from API */
   fetchingData = async () => {
     try {
       const data = await fetch(this.apiUrl);
-      const res = await data.json();
+      const response = await data.json();
       this.apiData = [];
-      res.result.map((element) => this.apiData.push(element));
+      response.result.map((element) => this.apiData.push(element));
       return this.getScore();
-    } catch (err) { return err; }
-  }
+    } catch (error) { return error; }
+  };
 
   /* Add a new Score */
-  addScore = async ({ user, scoreNum }) => {
+  addScore = async ({ user, scorePoints }) => {
     try {
       const config = {
         method: 'POST',
@@ -33,15 +36,15 @@ class Score {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ user, score: scoreNum }),
+        body: JSON.stringify({ user, score: scorePoints }),
       };
 
       const data = await fetch(this.apiUrl, config);
-      const res = await data.json();
-      this.apiData.push(res);
+      const response = await data.json();
+      this.apiData.push(response);
       return this.fetchingData();
-    } catch (err) { return err; }
-  }
+    } catch (error) { return error; }
+  };
 }
 
 export default Score;
