@@ -14,6 +14,10 @@
   padding-top: 20px;
 }
 
+.title-container {
+  background-color: #c2cfe0;
+}
+
 /* Whole Container */
 .whole-container {
   display: flex;
@@ -32,6 +36,7 @@
   display: flex;
   justify-content: space-evenly;
   margin-bottom: 4%;
+  background-color: #c2cfe0;
 }
 
 h2 {
@@ -77,6 +82,11 @@ h2 {
 .input-form {
   display: flex;
   flex-direction: column;
+}
+
+.input-header {
+  background-color: #c2cfe0;
+  text-align: center;
 }
 
 .input-form input {
