@@ -6,12 +6,14 @@ const addScore = document.querySelector('.input-form');
 
 addScore.addEventListener('submit', (e) => {
   e.preventDefault();
-  const name = addScore.name.value;
+  const user = addScore.name.value;
   const scoreNum = addScore.score.value;
-  newScore.addScore({ name, scoreNum });
-
+  newScore.addScore({ user, scoreNum });
   addScore.name.value = '';
   addScore.score.value = '';
+  addScore.reset();
 });
 
-document.addEventListener('DOMContentLoaded', newScore.getScore);
+const refreshBtn = document.getElementById('refresh-btn');
+refreshBtn.addEventListener('click', newScore.fetchingData);
+window.addEventListener('load', newScore.getScore);
