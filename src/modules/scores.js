@@ -1,50 +1,50 @@
 class Score {
-  constructor(id, name, score) {
-    this.id = id;
-    this.name = name;
+  constructor(user, score) {
+    this.user = user;
     this.score = score;
   }
 
-  /* Mocking Data */
+  /* Array for data */
+  apiData = [];
 
-  scoreData = [
-    {
-      id: 1,
-      name: 'A',
-      score: 10,
-    },
-    {
-      id: 2,
-      name: 'B',
-      score: 20,
-    },
-    {
-      id: 3,
-      name: 'C',
-      score: 30,
-    },
-    {
-      id: 4,
-      name: 'D',
-      score: 40,
-    },
-  ]
+  /* API URL */
+  apiUrl = 'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/dwaUzchB7HMCYRhPP4Wk/scores/';
 
   /* Display Score */
   getScore = () => {
     const scoresContainer = document.getElementById('scores');
-    scoresContainer.innerHTML = this.scoreData.map((element) => `<li class="score-item"}>${element.name} : ${element.score}</li>`).join('');
-  }
+    scoresContainer.innerHTML = this.apiData.map((element) => `<li class="score-item">${element.user} : ${element.score}</li>`).join('');
+  };
+
+  /* Getting data from API */
+  fetchingData = async () => {
+    try {
+      const data = await fetch(this.apiUrl);
+      const response = await data.json();
+      this.apiData = [];
+      response.result.map((element) => this.apiData.push(element));
+      return this.getScore();
+    } catch (error) { return error; }
+  };
 
   /* Add a new Score */
-  addScore=({ name, scoreNum }) => {
-    this.scoreData.push({
-      id: this.scoreData.length + 1,
-      name,
-      score: scoreNum,
-    });
-    this.getScore();
-  }
+  addScore = async ({ user, scorePoints }) => {
+    try {
+      const config = {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ user, score: scorePoints }),
+      };
+
+      const data = await fetch(this.apiUrl, config);
+      const response = await data.json();
+      this.apiData.push(response);
+      return this.fetchingData();
+    } catch (error) { return error; }
+  };
 }
 
 export default Score;

@@ -14,15 +14,17 @@ const addScore = document.querySelector('.input-form');
 
 addScore.addEventListener('submit', (e) => {
   e.preventDefault();
-  const name = addScore.name.value;
+  const user = addScore.name.value;
   const scoreNum = addScore.score.value;
-  newScore.addScore({ name, scoreNum });
-
+  newScore.addScore({ user, scoreNum });
   addScore.name.value = '';
   addScore.score.value = '';
+  addScore.reset();
 });
 
-document.addEventListener('DOMContentLoaded', newScore.getScore);
+const refreshBtn = document.getElementById('refresh-btn');
+refreshBtn.addEventListener('click', newScore.fetchingData);
+window.addEventListener('load', newScore.getScore);
 
 
 /***/ }),
@@ -335,7 +337,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n  font-family: 'Ubuntu', sans-serif;\n}\n\n/* Title */\n.title {\n  text-align: start;\n  margin-left: 7%;\n  margin-bottom: 3%;\n  font-size: 3em;\n  padding-top: 20px;\n}\n\n/* Whole Container */\n.whole-container {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-evenly;\n}\n\n/* Recent Scores */\n.score-list {\n  display: flex;\n  flex-direction: column;\n  width: 30%;\n}\n\n.score-header {\n  display: flex;\n  justify-content: space-evenly;\n  margin-bottom: 4%;\n}\n\nh2 {\n  font-size: 2em;\n}\n\n.refresh-btn {\n  width: 30%;\n}\n\n.scores-list {\n  list-style-type: none;\n  border: 3px solid black;\n  padding: 1%;\n}\n\n.scores-list li {\n  margin-bottom: 1%;\n}\n\n.scores-list li:nth-child(even) {\n  background-color: #c2cfe0;\n}\n\n/* BTN CLASS */\n.btn {\n  border: 2px solid black;\n  box-shadow: 1px 1px 1px black;\n  margin: auto 10px auto 0;\n  height: 35px;\n  font-size: 1em;\n}\n\n.btn:hover {\n  transform: scale(1.1);\n}\n\n/* Add your score */\n.add-score-container {\n  width: 20%;\n}\n\n.input-form {\n  display: flex;\n  flex-direction: column;\n}\n\n.input-form input {\n  margin-top: 5%;\n  border: 3px solid black;\n  padding: 0.2em;\n  font-size: 1em;\n}\n\n.submit-btn {\n  margin-top: 5%;\n  width: 30%;\n  align-self: flex-end;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "* {\r\n  margin: 0;\r\n  padding: 0;\r\n  box-sizing: border-box;\r\n  font-family: 'Ubuntu', sans-serif;\r\n}\r\n\r\n/* Title */\r\n.title {\r\n  text-align: start;\r\n  margin-left: 7%;\r\n  margin-bottom: 3%;\r\n  font-size: 3em;\r\n  padding-top: 20px;\r\n}\r\n\r\n/* Whole Container */\r\n.whole-container {\r\n  display: flex;\r\n  flex-direction: row;\r\n  justify-content: space-evenly;\r\n}\r\n\r\n/* Recent Scores */\r\n.score-list {\r\n  display: flex;\r\n  flex-direction: column;\r\n  width: 30%;\r\n}\r\n\r\n.score-header {\r\n  display: flex;\r\n  justify-content: space-evenly;\r\n  margin-bottom: 4%;\r\n}\r\n\r\nh2 {\r\n  font-size: 2em;\r\n}\r\n\r\n.refresh-btn {\r\n  width: 30%;\r\n}\r\n\r\n.scores-list {\r\n  list-style-type: none;\r\n  border: 3px solid black;\r\n  padding: 1%;\r\n}\r\n\r\n.scores-list li {\r\n  margin-bottom: 1%;\r\n}\r\n\r\n.scores-list li:nth-child(even) {\r\n  background-color: #c2cfe0;\r\n}\r\n\r\n/* BTN CLASS */\r\n.btn {\r\n  border: 2px solid black;\r\n  box-shadow: 1px 1px 1px black;\r\n  margin: auto 10px auto 0;\r\n  height: 35px;\r\n  font-size: 1em;\r\n}\r\n\r\n.btn:hover {\r\n  transform: scale(1.1);\r\n}\r\n\r\n/* Add your score */\r\n.add-score-container {\r\n  width: 20%;\r\n}\r\n\r\n.input-form {\r\n  display: flex;\r\n  flex-direction: column;\r\n}\r\n\r\n.input-form input {\r\n  margin-top: 5%;\r\n  border: 3px solid black;\r\n  padding: 0.2em;\r\n  font-size: 1em;\r\n}\r\n\r\n.submit-btn {\r\n  margin-top: 5%;\r\n  width: 30%;\r\n  align-self: flex-end;\r\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -449,49 +451,48 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 class Score {
-  constructor(id, name, score) {
-    this.id = id;
-    this.name = name;
+  constructor(user, score) {
+    this.user = user;
     this.score = score;
   }
 
-  /* Mocking Data */
+  apiData = [];
 
-  scoreData = [
-    {
-      id: 1,
-      name: 'A',
-      score: 10,
-    },
-    {
-      id: 2,
-      name: 'B',
-      score: 20,
-    },
-    {
-      id: 3,
-      name: 'C',
-      score: 30,
-    },
-    {
-      id: 4,
-      name: 'D',
-      score: 40,
-    },
-  ]
+  apiUrl = 'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/dwaUzchB7HMCYRhPP4Wk/scores/';
 
+  /* Display Score */
   getScore = () => {
     const scoresContainer = document.getElementById('scores');
-    scoresContainer.innerHTML = this.scoreData.map((element) => `<li class="score-item"}>${element.name} : ${element.score}</li>`).join('');
+    scoresContainer.innerHTML = this.apiData.map((element) => `<li class="score-item">${element.user} : ${element.score}</li>`).join('');
   }
 
-  addScore=({ name, scoreNum }) => {
-    this.scoreData.push({
-      id: this.scoreData.length + 1,
-      name,
-      score: scoreNum,
-    });
-    this.getScore();
+  fetchingData = async () => {
+    try {
+      const data = await fetch(this.apiUrl);
+      const res = await data.json();
+      this.apiData = []; // Clear the apiData array
+      res.result.map((element) => this.apiData.push(element));
+      return this.getScore();
+    } catch (err) { return err; }
+  }
+
+  /* Add a new Score */
+  addScore = async ({ user, scoreNum }) => {
+    try {
+      const config = {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ user, score: scoreNum }),
+      };
+
+      const data = await fetch(this.apiUrl, config);
+      const res = await data.json();
+      this.apiData.push(res);
+      return this.fetchingData();
+    } catch (err) { return err; }
   }
 }
 
