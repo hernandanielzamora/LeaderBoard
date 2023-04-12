@@ -18,7 +18,7 @@ class Score {
     try {
       const data = await fetch(this.apiUrl);
       const res = await data.json();
-      this.apiData = []; // Clear the apiData array
+      this.apiData = [];
       res.result.map((element) => this.apiData.push(element));
       return this.getScore();
     } catch (err) { return err; }
