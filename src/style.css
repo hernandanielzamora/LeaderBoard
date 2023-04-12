@@ -96,6 +96,7 @@ h2 {
   font-size: 1em;
 }
 
+/* Removing number input arrows */
 .no-spinner {
   -moz-appearance: textfield;
 }
